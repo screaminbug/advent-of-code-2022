@@ -3,7 +3,7 @@ package hr.tstrelar.advent_of_code_2022.application.service
 import hr.tstrelar.NL
 import hr.tstrelar.advent_of_code_2022.application.port.`in`.CalculateRpsScoreUpdatedUseCase
 import hr.tstrelar.advent_of_code_2022.application.port.`in`.CalculateRpsScoreUseCase
-import hr.tstrelar.advent_of_code_2022.application.service.Strategy.*
+import hr.tstrelar.advent_of_code_2022.application.service.Outcome.*
 
 enum class Shape(val score: Int) {
     ROCK( 1),
@@ -38,12 +38,12 @@ enum class Shape(val score: Int) {
     }
 }
 
-enum class Strategy(val score: Int) {
+enum class Outcome(val score: Int) {
     LOSE(0),
     DRAW(3),
     WIN(6);
     companion object {
-        fun fromCode(value: String): Strategy {
+        fun fromCode(value: String): Outcome {
             return when(value) {
                 "X" -> LOSE
                 "Y" -> DRAW
@@ -55,29 +55,28 @@ enum class Strategy(val score: Int) {
 }
 
 class Game(firstCode: String, secondCode: String) {
-    private val opponent = Shape.fromCode(firstCode)
-    private val my = Shape.fromCode(secondCode)
-    private val strategy = Strategy.fromCode(secondCode)
+    private val opponentShape = Shape.fromCode(firstCode)
+    private val myShape = Shape.fromCode(secondCode)
+    private val outcome = Outcome.fromCode(secondCode)
 
-    fun play() = my.score + if (isDraw()) { 3 } else if (isWin()) { 6 } else { 0 }
-    fun playUpdated() = shouldPlay().score + strategy.score
+    fun play() = myShape.score + if (isDraw()) { DRAW.score } else if (isWin()) { WIN.score } else { LOSE.score }
+    fun playUpdated() = myShape().score + outcome.score
 
-    private fun isDraw() = opponent == my
+    private fun isDraw() = opponentShape == myShape
 
-    private fun isWin() = my.wins() == opponent
+    private fun isWin() = myShape.wins() == opponentShape
 
-    private fun shouldPlay(): Shape {
-        return when (strategy) {
-            LOSE -> opponent.wins()
-            DRAW -> opponent
-            WIN -> opponent.loses()
-        }
+    private fun myShape() = when (outcome) {
+        LOSE -> opponentShape.wins()
+        DRAW -> opponentShape
+        WIN -> opponentShape.loses()
     }
+
 
 }
 
 class DayTwoService : CalculateRpsScoreUseCase, CalculateRpsScoreUpdatedUseCase {
-    override fun calculateScore(input: String) = getGames(input).sumOf {it.play() }.toString()
+    override fun calculateScore(input: String) = getGames(input).sumOf { it.play() }.toString()
 
     override fun calculateScoreUpdated(input: String) = getGames(input).sumOf { it.playUpdated() }.toString()
 
