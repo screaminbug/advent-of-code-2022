@@ -6,17 +6,16 @@ import hr.tstrelar.advent_of_code_2022.application.port.`in`.FindTopThreeElvesUs
 import java.math.BigInteger
 
 
-
 class DayOneService : FindMaxCaloriesUseCase, FindTopThreeElvesUseCase {
 
-    override fun getMaxCalories(input: String): BigInteger {
+    override fun getMaxCalories(input: String): String {
         val summed = getElvesSummed(input)
-        return summed.maxOrNull() ?: BigInteger.ZERO
+        return summed.maxOrNull().toString()
     }
 
-    override fun findTopThree(input: String): BigInteger {
+    override fun findTopThree(input: String): String {
         val summed = getElvesSummed(input)
-        return summed.sorted().takeLast(3).reduce { acc, e -> acc + e }
+        return summed.sorted().takeLast(3).reduce { acc, e -> acc + e }.toString()
     }
 
     private fun getElvesSummed(input: String) =

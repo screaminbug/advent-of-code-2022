@@ -77,9 +77,9 @@ class Game(firstCode: String, secondCode: String) {
 }
 
 class DayTwoService : CalculateRpsScoreUseCase, CalculateRpsScoreUpdatedUseCase {
-    override fun calculateScore(input: String) = getGames(input).sumOf {it.play() }
+    override fun calculateScore(input: String) = getGames(input).sumOf {it.play() }.toString()
 
-    override fun calculateScoreUpdated(input: String) = getGames(input).sumOf { it.playUpdated() }
+    override fun calculateScoreUpdated(input: String) = getGames(input).sumOf { it.playUpdated() }.toString()
 
     private fun getGames(input: String) = input.split(NL).map {
         val gameInCode = it.split(" ")

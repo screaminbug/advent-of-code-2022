@@ -7,11 +7,11 @@ import hr.tstrelar.advent_of_code_2022.application.port.`in`.SumOfPrioritiesUseC
 class DayThreeServiceAlt : SumOfPrioritiesUseCase, SumOfBadgePrioritiesUseCase {
     override fun getSum(input: String) = input.split(NL).map {
         findSameInRucksacks(it.chunked(it.length/2))
-    }.sumOf { it[0] }
+    }.sumOf { it[0] }.toString()
 
     override fun getSumOfBadges(input: String) = input.split(NL).chunked(3).map {
         findSameInRucksacks(it)
-    }.sumOf { it[0] }
+    }.sumOf { it[0] }.toString()
 
     private fun findSameInRucksacks(rucksacks: List<String>) = rucksacks.map {
         it.toCharArray()

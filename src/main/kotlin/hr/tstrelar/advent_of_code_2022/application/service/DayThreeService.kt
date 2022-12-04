@@ -15,7 +15,7 @@ class DayThreeService : SumOfPrioritiesUseCase, SumOfBadgePrioritiesUseCase {
             }.map(this::itemCodeToPriority).toList()
         }.sumOf {
             it[0]
-        }
+        }.toString()
 
 
     override fun getSumOfBadges(input: String) = input.split(NL).chunked(3).map { compartments ->
@@ -30,7 +30,7 @@ class DayThreeService : SumOfPrioritiesUseCase, SumOfBadgePrioritiesUseCase {
         }.map(this::itemCodeToPriority).toList()
         }.sumOf {
             it[0]
-        }
+        }.toString()
 
     private fun itemCodeToPriority(symbol: Int): Int {
         val converted = symbol and 0x1F
