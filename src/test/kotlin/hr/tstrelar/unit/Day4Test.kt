@@ -11,7 +11,7 @@ internal class Day4Test {
     private val overlappingAssignmentsUseCase: OverlappingAssignmentsUseCase = dayFourService
 
     @Test
-    fun sumOfPriorities() = runTestFor(
+    fun findFullyOverlappingAssignments() = runTestFor(
         day = 4,
         part = 1,
         fullyOverlappingAssignmentsUseCase::howManyFullyOverlap,
@@ -19,7 +19,7 @@ internal class Day4Test {
     )
 
     @Test
-    fun sumOfBadgePriorities() = runTestFor(
+    fun findOverlappingAssignments() = runTestFor(
         day = 4,
         part = 2,
         overlappingAssignmentsUseCase::howManyOverlap,
