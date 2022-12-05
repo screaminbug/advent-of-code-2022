@@ -14,7 +14,7 @@ class DayFourService : FullyOverlappingAssignmentsUseCase, OverlappingAssignment
         val a = extractAssignments(it)
         val elf1 = (a.elf1Start .. a.elf1End)
         val elf2 = (a.elf2Start .. a.elf2End)
-        if (elf1.intersect(elf2).isNotEmpty()) 1 else 0
+        if ((elf1 intersect elf2).isNotEmpty()) 1 else 0
     }.sum().toString()
     private fun extractAssignments(input: String): Assignments {
         val assignments = input.split(",")
